@@ -97,7 +97,7 @@ to give sudo permission make grader file
 
 
 Configure key-based authentication for grader
-- ``` sudo mkdir /home/grader/.ssh
+- ``` sudo mkdir /home/grader/.ssh ```
 - ``` sudo nano /home/grader/.ssh/authorized_keys ``` 
 - and paste inside it your public key which you can generate by ssh-keygen 
 - and change file permissens for them

@@ -6,10 +6,10 @@
 ## Project Description
 it shows how to configure server to deploy item catalog application(flask and postgresql) on it protecting it from important attacks factors
 it using third party oauth2 google+
-informations about app 
-- ip : 35.178.17.24
+informations about app
+- ip : 13.114.141.16
 - accessible ssh port : 2200
-- application github URL : https://github.com/Mostfa-Adel/catalog
+- flask app github URL : https://github.com/Mostfa-Adel/catalog
 
 ## configure to serve catalog app
 update and upgrade all packages
@@ -46,7 +46,7 @@ install required installation for the app
 ```
 sudo apt-get install python-pip
 sudo pip install flask oauth2client sqlalchemy requests
-pip install psycopg2
+sudo pip install psycopg2 psycopg2-binary
 ```
 
 installating and configure postgresql database requirement
@@ -68,15 +68,14 @@ reatsrt apache
 - ``` sudo service apache2 restart ```
 
 
-
 required changes to __init__.py file
 - replace
-```CLIENT_ID = json.loads(open("client_secrets.json", 'r')```
+``` CLIENT_ID = json.loads(open("client_secrets.json", 'r') ```
 by
-```CLIENT_ID = json.loads(open("/var/www/catalog/client_secrets.json", 'r')```
+``` CLIENT_ID = json.loads(open("/var/www/catalog/client_secrets.json", 'r') ```
 
 to generate dummy categories to test run create_categories.py
-you can edit the list in this file to customize your categories
+(you can edit the list in this file to customize your categories)
 
 errors found by
 - ``` sudo cat /var/log/apache2/error.log ```
@@ -100,7 +99,7 @@ Configure key-based authentication for grader
 - ``` sudo mkdir /home/grader/.ssh ```
 - ``` sudo nano /home/grader/.ssh/authorized_keys ``` 
 - and paste inside it your public key which you can generate by ssh-keygen 
-- and change file permissens for them
+- and adjust file permissens for them(grader user should do this)
 ``` 
 sudo chmod 700 /home/grader/.ssh 
 sudo chmod 644 /home/grader/.ssh/authorized_keys
@@ -108,8 +107,10 @@ sudo chmod 644 /home/grader/.ssh/authorized_keys
 
 
 change ssh port to 2200
+(on aws light sail you will need to open add port to your instnce from networking section)
 - ``` sudo nano /etc/ssh/sshd_config ```
 - change port to 2200 (it often 22)
+-```sudo service sshd restart```
 
 configure firewall
 ```

@@ -7,52 +7,54 @@
 it shows how to configure server to deploy item catalog application(flask and postgresql) on it protecting it from important attacks factors
 it using third party oauth2 google+
 informations about app
-- ip : 13.114.141.16
+- ip : 46.51.233.14
 - accessible ssh port : 2200
 - flask app github URL : https://github.com/Mostfa-Adel/catalog
 
 ## configure to serve catalog app
 update and upgrade all packages
+
 ``` 
 sudo apt-get update 
 sudo apt-get upgrade 
 ```
 
 make the local timezone to UTC
+
 - ``` sudo dpkg-reconfigure tzdata ``` 
 - and choose non of the above then UTC
 
 
 install apache and wsgi mod
-- ``` sudo apt-get install apache2 libapache2-mod-wsgi ```
+- ``` sudo apt-get install apache2 libapache2-mod-wsgi ``` 
 
 edit 000-default.conf
-- ``` sudo nano /etc/apache2/sites-enabled/000-default.conf ```
-- and add the follwing line before ending block `</virtualHost>`
-` WSGIScriptAlias / /var/www/html/catalog.wsgi `
+- ``` sudo nano /etc/apache2/sites-enabled/000-default.conf ``` 
+- and add the follwing line before ending block `</virtualHost>` 
+` WSGIScriptAlias / /var/www/html/catalog.wsgi ` 
 
 create catalog.wsgi file
-- ``` sudo nano /var/www/html/catalog.wsgi ```
-- with content 
-> import sys
+- ``` sudo nano /var/www/html/catalog.wsgi ``` 
+- with content  
+> import sys 
 > sys.path.insert(0,'/var/www/catalog')
 > from ` __init__ ` import app as application
 > application.secret_key = 'super_secret_key'
 
 clone the app in dir /var/www 
-- ``` sudo git clone https://github.com/Mostfa-Adel/catalog ```
+- ``` sudo git clone https://github.com/Mostfa-Adel/catalog ``` 
 
 install required installation for the app
 ```
-sudo apt-get install python-pip
-sudo pip install flask oauth2client sqlalchemy requests
-sudo pip install psycopg2 psycopg2-binary
+sudo apt-get install python-pip 
+sudo pip install flask oauth2client sqlalchemy requests 
+sudo pip install psycopg2 psycopg2-binary 
 ```
 
-installating and configure postgresql database requirement
+installating and configure postgresql database requirement 
 ```
-sudo apt-get install libpq-dev python-dev postgresql postgresql-contrib
-sudo su - postgres
+sudo apt-get install libpq-dev python-dev postgresql postgresql-contrib 
+sudo su - postgres 
 psql
 CREATE USER catalog WITH PASSWORD 'password';
 ALTER USER catalog CREATEDB;
@@ -129,3 +131,7 @@ edit sshd_config file
 - on line ``` PermitRootLogin without-password ```
 - change without-password to no
 
+## resourses
+
+- http://flask.pocoo.org/docs/0.12/deploying/mod_wsgi/
+- https://www.digitalocean.com/community/tutorials/how-to-install-and-use-postgresql-on-ubuntu-16-04
